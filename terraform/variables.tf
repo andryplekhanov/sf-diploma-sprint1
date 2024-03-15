@@ -1,21 +1,20 @@
-# Provider
-
 variable "cloud_id" {
-  description = "default cloud_id"
+  description = "Default cloud ID in yandex cloud"
   type        = string
-  default     = "b1gdtu6fru13qselq36d"
+  default     = ""
 }
 
 variable "folder_id" {
-  description = "default folder_id"
+  description = "Default folder ID in yandex cloud"
   type        = string
-  default     = "b1g27g570jo7mqqbapvm"
+  default     = ""
 }
 
-variable "service_account_key_yandex_admin" {
+variable "yandex_cloud_token" {
   type        = string
-  default     = "../key.json"
-  description = "Local storing service key for admin. Not in git tracking"
+  default     = ""
+  description = "Default cloud token in yandex cloud"
+  sensitive   = true
 }
 
 variable "zone" {

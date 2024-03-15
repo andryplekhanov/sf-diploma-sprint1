@@ -18,17 +18,10 @@
 
 Надо реализовать возможность установки на сервер всех необходимых нам настроек и пакетов, будь то docker-compose, gitlab-runner или наши публичные ключи для доступа по SSH. Положите код автоматизации в Git-репозиторий.
 
-## Подготовка
-1. Создать в YC сервисный аккаунт с ролью **admin**.
-2. В cli хостовой машины инициализировать аккаунт: `yc init`.
-3. Скачать проект и перейти в него.
-4. В cli хостовой машины создать ключ для авторизации в YC через Terraform:
-`yc iam key create   --service-account-id <id созданного серв. акк.> --folder-name <имя каталога в YC> --output key.json`
-
 ## Запуск
 1. Перейти в директорию `cd terraform`
 2. Инициировать терраформ `terraform init`
-3. Применить `terraform apply`
+3. Применить `terraform apply -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
 
 ## Удаление
-Если ничего больше не нужно,ю удаляем командой `terraform destroy`
+Если ничего больше не нужно, удаляем командой `terraform destroy -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
