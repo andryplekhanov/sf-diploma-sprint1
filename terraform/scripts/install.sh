@@ -62,25 +62,25 @@ sleep 5
 
 # Клонируем репозитории для установки k8s кластера с помощью kubespray
 cd /opt/
-git clone https://git.cloud-team.ru/lections/kubernetes_setup.git
-cd kubernetes_setup/
+git clone https://github.com/andryplekhanov/kubernetes_setup_with_kubespray.git
+cd kubernetes_setup_with_kubespray/
 git clone --branch=release-2.24 https://github.com/kubernetes-sigs/kubespray.git
 pip3 install -r ./kubespray/requirements.txt
 sleep 5
 
 # Даём нужные разрешения, подкладываем ключи
-chmod +x /opt/kubernetes_setup/cluster_install.sh
-chmod +x /opt/kubernetes_setup/cluster_destroy.sh
-chmod +x /opt/kubernetes_setup/terraform/generate_credentials_velero.sh
-chmod +x /opt/kubernetes_setup/terraform/generate_etc_hosts.sh
-chmod +x /opt/kubernetes_setup/terraform/generate_inventory.sh
-mv /home/ubuntu/private.variables.tf /opt/kubernetes_setup/terraform/private.variables.tf
+chmod +x /opt/kubernetes_setup_with_kubespray/cluster_install.sh
+chmod +x /opt/kubernetes_setup_with_kubespray/cluster_destroy.sh
+chmod +x /opt/kubernetes_setup_with_kubespray/terraform/generate_credentials_velero.sh
+chmod +x /opt/kubernetes_setup_with_kubespray/terraform/generate_etc_hosts.sh
+chmod +x /opt/kubernetes_setup_with_kubespray/terraform/generate_inventory.sh
+mv /home/ubuntu/private.variables.tf /opt/kubernetes_setup_with_kubespray/terraform/private.variables.tf
 cp /home/ubuntu/id_rsa.pub /home/ubuntu/.ssh/id_rsa.pub
 cp /home/ubuntu/id_rsa /home/ubuntu/.ssh/id_rsa
 mv /home/ubuntu/id_rsa.pub /root/.ssh/id_rsa.pub
 mv /home/ubuntu/id_rsa /root/.ssh/id_rsa
 echo "private_key_file = /home/ubuntu/.ssh/id_rsa.pub" >> /etc/ansible/ansible.cfg
-echo "private_key_file = /home/ubuntu/.ssh/id_rsa.pub" >> /opt/kubernetes_setup/kubespray/ansible.cfg
+echo "private_key_file = /home/ubuntu/.ssh/id_rsa.pub" >> /opt/kubernetes_setup_with_kubespray/kubespray/ansible.cfg
 chmod 700 /home/ubuntu/.ssh/
 chmod 700 /root/.ssh/
 chmod 600 /home/ubuntu/.ssh/id_rsa
@@ -141,5 +141,5 @@ echo -e " "
 echo -e "Необходимые пакеты: ansible,terraform, terragrunt, jq, docker, docker-compose, git, gitlab-runner, kubeadm, kubectl, helm установлены!"
 echo -e "Подготовка к развёртыванию кластера k8s закончена успешно."
 echo -e "Далее необходимо подключиться к сервисной ноде по ssh и запустить скрипт установки k8s кластера в ручную командой ниже:"
-echo -e "cd /opt/kubernetes_setup/ && sh cluster_install.sh"
-sleep 5
+echo -e "sudo su && cd /opt/kubernetes_setup_with_kubespray/ && sh cluster_install.sh"
+sleep 10
