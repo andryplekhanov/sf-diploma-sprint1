@@ -20,3 +20,33 @@ variable "yandex_folder_id" {
   type        = string
   default     = "${folder_id}"
 }
+
+
+
+# Переменная определяющая id сети
+variable "vpc_network_id" {
+  description = "VPC network id"
+  type        = string
+  default     = "${vpc_network_id}"
+}
+
+# Переменная определяющая id подсети
+variable "vpc_subnet1_id" {
+  description = "VPC subnet 1 id"
+  type        = string
+  default     = "${vpc_subnet1_id}"
+}
+
+# Переменная определяющая id подсети 2
+variable "vpc_subnet2_id" {
+  description = "VPC subnet 2 id"
+  type        = string
+  default     = "${vpc_subnet2_id}"
+}
+
+# Переменная определяющая id подсети 3
+variable "vpc_subnet3_id" {
+  description = "VPC subnet 3 id"
+  type        = string
+  default     = "${vpc_subnet3_id}"
+}

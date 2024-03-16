@@ -29,7 +29,7 @@ resource "null_resource" "srv" {
 
   # Копируем в srv ноду ключи
   provisioner "file" {
-    source      = "key/"
+    source      = "~/.ssh/"
     destination = "/home/ubuntu"
   }
 

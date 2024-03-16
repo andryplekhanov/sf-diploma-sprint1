@@ -18,10 +18,11 @@
 
 Надо реализовать возможность установки на сервер всех необходимых нам настроек и пакетов, будь то docker-compose, gitlab-runner или наши публичные ключи для доступа по SSH. Положите код автоматизации в Git-репозиторий.
 
-## Запуск
-1. Перейти в директорию `cd terraform`
-2. Инициировать терраформ `terraform init`
-3. Применить `terraform apply -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
+## Создание сервера srv
+1. Вы должны производить действия на машине с Unix-системой (у меня Ubuntu 2204); должен быть установлен terraform; должны быть сгенерированы ssh-ключи без пароля с именами `id_rsa`и `id_rsa.pub` в директории `~/.ssh/`
+2. Скачать репо и перейти в директорию `cd sf-diploma-sprint1/terraform`
+3. Инициировать терраформ `terraform init`
+4. Применить `terraform apply -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
 
 ## Удаление
 Если ничего больше не нужно, удаляем командой `terraform destroy -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`

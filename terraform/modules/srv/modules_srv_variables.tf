@@ -4,8 +4,23 @@ variable "instance_family_image" {
   default     = "ubuntu-2204-lts"
 }
 
-variable "vpc_subnet_id" {
-  description = "VPC subnet network id"
+variable "vpc_network_id" {
+  description = "VPC network id"
+  type        = string
+}
+
+variable "vpc_subnet1_id" {
+  description = "VPC subnet 1 id"
+  type        = string
+}
+
+variable "vpc_subnet2_id" {
+  description = "VPC subnet 2 id"
+  type        = string
+}
+
+variable "vpc_subnet3_id" {
+  description = "VPC subnet 3 id"
   type        = string
 }
 

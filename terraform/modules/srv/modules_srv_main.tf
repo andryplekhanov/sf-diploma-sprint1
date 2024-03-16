@@ -49,7 +49,7 @@ resource "yandex_compute_instance" "srv" {
   }
 
   network_interface {
-    subnet_id = var.vpc_subnet_id
+    subnet_id = var.vpc_subnet1_id
     nat       = var.nat
   }
 
@@ -67,9 +67,13 @@ resource "yandex_compute_instance" "srv" {
 data "template_file" "private_variables" {
   template = file("${path.module}/private.variables.tf.tpl")
   vars = {
-    token     = var.yandex_token
-    cloud_id  = var.yandex_cloud_id
-    folder_id = var.yandex_folder_id
+    token          = var.yandex_token
+    cloud_id       = var.yandex_cloud_id
+    folder_id      = var.yandex_folder_id
+    vpc_network_id = var.vpc_network_id
+    vpc_subnet1_id = var.vpc_subnet1_id
+    vpc_subnet2_id = var.vpc_subnet2_id
+    vpc_subnet3_id = var.vpc_subnet3_id
   }
 }
 
