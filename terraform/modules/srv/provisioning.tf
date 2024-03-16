@@ -27,11 +27,11 @@ resource "null_resource" "srv" {
     destination = "/home/ubuntu"
   }
 
-# Копируем в srv ноду ключи
-#  provisioner "file" {
-#    source      = "key/"
-#    destination = "/home/ubuntu"
-#  }
+  # Копируем в srv ноду ключи
+  provisioner "file" {
+    source      = "key/"
+    destination = "/home/ubuntu"
+  }
 
 # Копируем в srv ноду var креды для подключения к яндекс облаку с неё
   provisioner "file" {
