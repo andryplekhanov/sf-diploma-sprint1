@@ -2,7 +2,7 @@
 echo 'hello, we are starting to install software'
 
 # Перечитываем пакеты и обновляем ОС
-export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get dist-upgrade -y
+apt-get update && apt-get upgrade -y
 
 # Устнавливаем terraform и terragrunt с учетом яндекс-зеркала для работы в условиях блокировок - делаем исполняемыми бинарные файлы'
 chmod +x /home/ubuntu/terraform
@@ -31,12 +31,12 @@ apt-get install jq ansible -y
 # Установка kubeadm kubectl
 # Ставим публичный ключ Google Cloud.
 # Добавляем Kubernetes репозиторий и перечитываем их:
-curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update
 
 # Устанавливаем и замораживаем версию утилит при последующих обновлениях через пакетный менеджер:
-apt-get install -y kubeadm kubectl
+apt-get install -y kubectl kubeadm
 apt-mark hold kubeadm kubectl
 
 # Установка helm
@@ -64,8 +64,8 @@ sleep 5
 cd /opt/
 git clone https://github.com/andryplekhanov/kubernetes_setup_with_kubespray.git
 cd kubernetes_setup_with_kubespray/
-git clone --branch=release-2.24 https://github.com/kubernetes-sigs/kubespray.git
-pip3 install -r ./kubespray/requirements.txt
+git clone --branch=release-2.19 https://github.com/kubernetes-sigs/kubespray.git
+pip3 install -r ./kubespray/requirements-2.9.txt
 sleep 5
 
 # Даём нужные разрешения, подкладываем ключи
@@ -77,8 +77,8 @@ chmod +x /opt/kubernetes_setup_with_kubespray/terraform/generate_inventory.sh
 mv /home/ubuntu/private.variables.tf /opt/kubernetes_setup_with_kubespray/terraform/private.variables.tf
 cp /home/ubuntu/id_rsa.pub /home/ubuntu/.ssh/id_rsa.pub
 cp /home/ubuntu/id_rsa /home/ubuntu/.ssh/id_rsa
-cp /home/ubuntu/id_rsa.pub /root/.ssh/id_rsa.pub
-cp /home/ubuntu/id_rsa /root/.ssh/id_rsa
+cp /home/ubuntu/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
+cp /home/ubuntu/.ssh/id_rsa /root/.ssh/id_rsa
 echo "private_key_file = /home/ubuntu/.ssh/id_rsa.pub" >> /etc/ansible/ansible.cfg
 echo "private_key_file = /home/ubuntu/.ssh/id_rsa.pub" >> /opt/kubernetes_setup_with_kubespray/kubespray/ansible.cfg
 chmod 700 /home/ubuntu/.ssh/
@@ -144,4 +144,4 @@ echo -e "Далее необходимо подключиться к серви�
 echo -e "sudo su"
 echo -e "cd /opt/kubernetes_setup_with_kubespray"
 echo -e "sh cluster_install.sh"
-sleep 10
+sleep 5
