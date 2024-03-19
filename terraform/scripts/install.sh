@@ -21,6 +21,7 @@ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker c
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker $USER
+sudo usermod -aG docker root
 systemctl enable docker.service && systemctl enable containerd.service && systemctl start docker.service && sudo systemctl start containerd.service
 
 # Ставим jq, pip и ansible
@@ -44,9 +45,10 @@ apt-mark hold kubeadm kubectl
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 
-# Перечитываем репозитории и ставим helm
+# Перечитываем репозитории и ставим helm и плагин helm-secrets
 apt-get update
 apt-get install helm -y
+helm plugin install https://github.com/jkroepke/helm-secrets
 
 # Установка gitlab-runner
 # Ставим официальный репозиторий gitlab-runner и перечитываем списки репозиторий
@@ -56,6 +58,7 @@ apt-get update
 # Установка и запуск gitlab-runner
 apt-get install gitlab-runner -y
 systemctl enable gitlab-runner --now
+sudo usermod -aG docker gitlab-runner
 
 echo -e "Сервисная нода готова к управлению кластером k8s. Приступаем к подготовке к развёртывнию кластера."
 sleep 5
@@ -138,8 +141,7 @@ echo -e " "
 echo -e "============================= Версия helm ==================================="
 helm version
 echo -e " "
-echo -e "Необходимые пакеты: ansible,terraform, terragrunt, jq, docker, docker-compose, git, gitlab-runner, kubeadm, kubectl, helm установлены!"
-echo -e "Подготовка к развёртыванию кластера k8s закончена успешно."
+echo -e "Подготовка к развёртыванию кластера k8s закончена."
 echo -e "Далее необходимо подключиться к сервисной ноде по ssh и запустить скрипт установки k8s кластера в ручную командой ниже:"
 echo -e "sudo su"
 echo -e "cd /opt/kubernetes_setup_with_kubespray"
