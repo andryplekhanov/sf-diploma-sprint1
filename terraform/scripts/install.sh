@@ -40,6 +40,18 @@ apt-get update
 apt-get install -y kubectl kubeadm
 apt-mark hold kubeadm kubectl
 
+# Установка sops и Age
+curl -LO https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64
+mv sops-v3.8.1.linux.amd64 /bin/sops
+chmod +x /bin/sops
+AGE_VERSION=$(curl -s "https://api.github.com/repos/FiloSottile/age/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+curl -Lo age.tar.gz "https://github.com/FiloSottile/age/releases/latest/download/age-v${AGE_VERSION}-linux-amd64.tar.gz"
+tar xf age.tar.gz
+sudo mv age/age /usr/local/bin
+sudo mv age/age-keygen /usr/local/bin
+rm -rf age.tar.gz
+rm -rf age
+
 # Установка helm
 # Ставим ключ и репозиторий:
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
@@ -48,7 +60,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.
 # Перечитываем репозитории и ставим helm и плагин helm-secrets
 apt-get update
 apt-get install helm -y
-helm plugin install https://github.com/jkroepke/helm-secrets
+helm plugin install https://github.com/jkroepke/helm-secrets --version v4.5.1
 
 # Установка gitlab-runner
 # Ставим официальный репозиторий gitlab-runner и перечитываем списки репозиторий
@@ -103,44 +115,70 @@ echo -e "Подготовка сервера srv закончена!"
 echo -e " "
 echo -e "Установились следующие утилиты:"
 echo -e " "
+
 echo -e "=========================== Версия ansible =================================="
 echo -e " "
 ansible --version
 echo -e " "
+
 echo -e "=========================== Версия python3 =================================="
 echo -e " "
 python3 --version
 echo -e " "
+
 echo -e "========================== Версия terraform ================================="
 terraform --version
 echo -e " "
+
 echo -e "========================== Версия terragrunt ================================"
 terragrunt --version
 echo -e " "
+
 echo -e "============================== Версия jq ===================================="
 jq --version
 echo -e " "
+
 echo -e "============================ Версия docker =================================="
 docker --version
 echo -e " "
+
 echo -e "======================== Версия docker-compose =============================="
 docker compose version
 echo -e " "
+
 echo -e "============================== Версия git ==================================="
 git --version
 echo -e " "
+
 echo -e "======================== Версия gitlab-runner ==============================="
 gitlab-runner --version
 echo -e " "
+
 echo -e "========================== Версия kubeadm ==================================="
 kubeadm version
 echo -e " "
 echo -e "=========================== Версия kubectl =================================="
 kubectl version
 echo -e " "
+
 echo -e "============================= Версия helm ==================================="
 helm version
 echo -e " "
+
+echo -e "============================= Версия helm secrets ==================================="
+helm secrets --version
+echo -e " "
+
+echo -e "============================= Версия sops ==================================="
+sops --version
+echo -e " "
+
+echo -e "============================= Версия age ==================================="
+age -version
+echo -e " "
+
+
+
 echo -e "Подготовка к развёртыванию кластера k8s закончена."
 echo -e "Далее необходимо подключиться к сервисной ноде по ssh и запустить скрипт установки k8s кластера в ручную командой ниже:"
 echo -e "sudo su"
