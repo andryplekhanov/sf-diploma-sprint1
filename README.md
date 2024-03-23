@@ -35,12 +35,12 @@ external_ip_address_srv = [
 ## Создание кластера k8s (примерно 15 мин.)
 1. Подключиться по ssh к серверу srv `ssh ubuntu@<external_ip_address_srv>`
 2. Сделаться суперюзером `sudo su`
-3. Перейти в директорию `cd /opt/kubernetes_setup_with_kubespray`
+3. Перейти в директорию `cd /opt/kubernetes_setup`
 4. Запустить скрипт `sh cluster_install.sh`
 5. В результате получаем в консоли информацию о кластере
-![k8s-cluster](result.png)
+![k8s-cluster](result_k8s..png)
 
 ## Удаление
 Если ничего больше не нужно, то удаляем всё в 2 этапа:
-1. На сервере **srv**: `sudo su`, `cd /opt/kubernetes_setup_with_kubespray`, `sh cluster_destroy.sh`
+1. На сервере **srv**: `sudo su`, `cd /opt/kubernetes_setup`, `sh cluster_destroy.sh`
 2. На локальном хосте в каталоге `sf-diploma-sprint1/terraform`: `terraform destroy -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
