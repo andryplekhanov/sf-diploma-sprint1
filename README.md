@@ -23,7 +23,7 @@
 2. Скачать репо и перейти в директорию `git clone https://github.com/andryplekhanov/sf-diploma-sprint1.git && cd sf-diploma-sprint1 && cd terraform`
 3. Инициировать терраформ `terraform init`
 4. Применить `terraform apply -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
-5. В результате получаем в консоли ip-адрес сервера:
+5. В результате получаем в консоли ip-адрес контроллер-сервера **srv**:
 ```
 external_ip_address_srv = [
   [
@@ -37,8 +37,21 @@ external_ip_address_srv = [
 2. Сделаться суперюзером `sudo su`
 3. Перейти в директорию `cd /opt/kubernetes_setup`
 4. Запустить скрипт `sh cluster_install.sh`
-5. В результате получаем в консоли информацию о кластере
-![k8s-cluster](result_k8s..png)
+
+Данный скрипт при помощи **Terraform** развернёт в Яндекс-облаке необходимую инфраструктуру для кластера k8s. 
+После развёртывания получаем информацию о балансировщике:
+```
+load_balancer_public_ip = tolist([
+  "158.160.156.161",
+])
+static-key-access-key = "YCAJEuxrZkg53nkiJQYucRF7n"
+static-key-secret-key = <sensitive>
+```
+Запомним ip. По нему мы будем получать доступ к приложению после развёртывания.
+
+5. Через 85 секунд автоматически начнётся развёртка кластера k8s при помощи **Ansible**. 
+6. В результате получаем в консоли информацию о кластере:
+![k8s-cluster](result_k8s.png)
 
 ## Удаление
 Если ничего больше не нужно, то удаляем всё в 2 этапа:

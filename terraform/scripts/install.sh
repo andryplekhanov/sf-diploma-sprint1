@@ -182,6 +182,6 @@ echo -e " "
 echo -e "Подготовка к развёртыванию кластера k8s закончена."
 echo -e "Далее необходимо подключиться к сервисной ноде по ssh и запустить скрипт установки k8s кластера в ручную командой ниже:"
 echo -e "sudo su"
-echo -e "cd /opt/kubernetes_setup_with_kubespray"
+echo -e "cd /opt/kubernetes_setup"
 echo -e "sh cluster_install.sh"
 sleep 5
