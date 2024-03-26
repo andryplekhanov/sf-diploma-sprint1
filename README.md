@@ -18,7 +18,7 @@
 
 ## Создание сервера srv (примерно 10 мин.)
 1. Вы должны производить действия на локальном хосте с Unix-системой (у меня Ubuntu 2204); должен быть установлен terraform; должны быть сгенерированы ssh-ключи без пароля с именами `id_rsa`и `id_rsa.pub` в директории `~/.ssh/`
-2. Скачать репо и перейти в директорию `git clone https://github.com/andryplekhanov/sf-diploma-sprint1.git && cd sf-diploma-sprint1 && cd terraform`
+2. Скачать репо и перейти в директорию `git clone https://github.com/andryplekhanov/sf-diploma-sprint1.git && cd sf-diploma-sprint1/terraform`
 3. Инициировать терраформ `terraform init`
 4. Применить `terraform apply -var="yandex_cloud_token=<ваш токен>" -var="cloud_id=<ваш cloud_id>" -var="folder_id=<ваш folder_id>"`
 5. В результате получаем в консоли ip-адрес контроллер-сервера **srv**:
